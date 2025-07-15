@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3000;
 const twilio = require("twilio");
 
 
-app.get('/twilio/inbound', (req, res) => {
+app.post('/twilio/inbound', (req, res) => {
 
   const twiml = new twilio.twiml.VoiceResponse(); 
   console.log("=========================== }");
