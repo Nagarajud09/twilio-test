@@ -14,16 +14,13 @@ app.post('/twilio/inbound', (req, res) => {
     const dial = twiml.dial({
         action: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
         method: "POST",
-        timeout: 20,
-        statusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
-        statusCallbackMethod: "POST",
-        record: true,
-        recordingTrack: "both",
-        trim: "do-not-trim",
-        recordingStatusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
-        recordingStatusCallbackMethod: "POST",
-        recordingStatusCallbackEvents: ["in-progress", "completed", "absent"],
-        statusCallbackEvent: ["initiated", "ringing", "answered", "completed"]
+        // timeout: 20,
+        // record: true,
+        // recordingTrack: "both",
+        // trim: "do-not-trim",
+        // recordingStatusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
+        // recordingStatusCallbackMethod: "POST",
+        // recordingStatusCallbackEvents: "in-progress completed absent",
     });
 
     const called_number = req.query.phoneNumber;
