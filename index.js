@@ -5,20 +5,35 @@ const twilio = require("twilio");
 
 
 app.post('/twilio/inbound', (req, res) => {
+    console.log("=========================== }");
 
-  const twiml = new twilio.twiml.VoiceResponse(); 
-  console.log("=========================== }");
+    const twiml = new twilio.twiml.VoiceResponse();
 
-  twiml.say('Almost connecting to Runo user.');
-  const dial = twiml.dial({
-    action: "https://webhook.site/9cf191f8-5f0b-41a9-9bd1-429435c4a59c",
-  });
-  const called_number = req.query.phoneNumber;
-  dial.number(called_number);
+    console.log(`Outbound req query : ${req.query}`);
+    console.log("=========================== }");
+    console.log(`Outbound req body: ${req.body}`);
+    console.log("=========================== }");
+    console.log(`Outbound req params: ${req.params}`);
+    console.log("=========================== }");
 
+    twiml.say('Connecting to Runo user.');
 
+    const dial = twiml.dial({
+        action: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
+    });
+
+    const called_number = req.query.phoneNumber;
+    dial.number(called_number);
+
+    // send response to Twilio
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
 });
 
 app.listen(PORT, () => {
-  console.log(`Runo custom IVR server listening on port ${PORT}`);
+    console.log(`Runo custom IVR server listening on port ${PORT}`);
 });
