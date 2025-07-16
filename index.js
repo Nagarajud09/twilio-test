@@ -9,13 +9,6 @@ app.post('/twilio/inbound', (req, res) => {
 
     const twiml = new twilio.twiml.VoiceResponse();
 
-    console.log(`Outbound req query : ${req.query}`);
-    console.log("=========================== }");
-    console.log(`Outbound req body: ${req.body}`);
-    console.log("=========================== }");
-    console.log(`Outbound req params: ${req.params}`);
-    console.log("=========================== }");
-
     twiml.say('Connecting to Runo user.');
 
     const dial = twiml.dial({
