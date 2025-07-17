@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const twilio = require("twilio");
+const bodyParser = require('body-parser');
+
+
+const client = twilio(accountSid, authToken);
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.post('/twilio/inbound', (req, res) => {
@@ -13,7 +19,7 @@ app.post('/twilio/inbound', (req, res) => {
 
     const dial = twiml.dial({
         action: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
-        method: "POST",
+        method: "GET",
         timeout: 20,
         statusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
         statusCallbackMethod: "POST",
@@ -22,8 +28,8 @@ app.post('/twilio/inbound', (req, res) => {
         trim: "do-not-trim",
         recordingStatusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
         recordingStatusCallbackMethod: "POST",
-        recordingStatusCallbackEvents: "in-progress completed absent",
-        statusCallbackEvent: "initiated ringing answered completed"
+        recordingStatusCallbackEvents: ["in-progress", "completed", "absent"],
+        statusCallbackEvent: ["initiated", "ringing", "answered", "completed"]
     });
 
     const called_number = req.query.phoneNumber;
@@ -32,6 +38,28 @@ app.post('/twilio/inbound', (req, res) => {
     // send response to Twilio
     res.type('text/xml');
     res.send(twiml.toString());
+});
+const twilioPhoneNumber = '+13167106323';
+const customerNumber = '+917078202575';
+// Endpoint to initiate call
+app.get('/start-call', async (req, res) => {
+    try {
+        const call = await client.calls.create({
+            url: 'https://twilio-test-agk5.onrender.com/twilio/inbound?phoneNumber=+919573889142',
+            to: customerNumber,
+            from: twilioPhoneNumber,
+            record: true,
+            callReason: "Testing for the first time.",
+            statusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
+            statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed'],
+        });
+
+        console.log('Call initiated, SID:', call.sid);
+        res.send('Call initiated, SID: ' + call.sid);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error initiating call.');
+    }
 });
 
 app.get('/health', (req, res) => {
