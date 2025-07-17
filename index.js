@@ -28,8 +28,8 @@ app.post('/twilio/inbound', (req, res) => {
         trim: "do-not-trim",
         recordingStatusCallback: "https://webhook.site/1baaacd9-d96b-4914-99dc-829b00519ddb",
         recordingStatusCallbackMethod: "POST",
-        recordingStatusCallbackEvents: "in-progress completed absent",
-        statusCallbackEvent: "initiated ringing answered completed"
+        recordingStatusCallbackEvents: ["in-progress", "completed", "absent"],
+        statusCallbackEvent: ["initiated", "ringing", "answered", "completed"]
     });
 
     const called_number = req.query.phoneNumber;
