@@ -5,7 +5,7 @@ const twilio = require("twilio");
 const bodyParser = require('body-parser');
 
 
-const client = twilio(accountSid, authToken);
+//const client = twilio(accountSid, authToken);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
