@@ -33,14 +33,18 @@ app.post('/twilio/inbound', (req, res) => {
     });
 
     const called_number = req.query.phoneNumber;
-    dial.number(called_number);
+    dial.number({
+        statusCallback: "https://webhook.site/0b382ccc-253a-456c-96cf-ab8291a514f8?event=customer",
+        statusCallbackEvent: ["answered", "completed", "initiated", "ringing"],
+        statusCallbackMethod: "POST"
+    }, called_number);
 
     // send response to Twilio
     res.type('text/xml');
     res.send(twiml.toString());
 });
 const twilioPhoneNumber = '+13167106323';
-const customerNumber = '+917078202575';
+const customerNumber = '+917008284181';
 // Endpoint to initiate call
 app.get('/start-call', async (req, res) => {
     try {
@@ -52,6 +56,9 @@ app.get('/start-call', async (req, res) => {
             callReason: "Testing for the first time.",
             statusCallback: "https://webhook.site/15cec1d8-7693-4962-b823-d02e614e608d",
             statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed'],
+            recordingStatusCallback: "https://webhook.site/1baaacd9-d96b-4914-99dc-829b00519ddb",
+            recordingStatusCallbackMethod: "POST",
+            recordingStatusCallbackEvents: ["in-progress", "completed", "absent"],
         });
 
         console.log('Call initiated, SID:', call.sid);
