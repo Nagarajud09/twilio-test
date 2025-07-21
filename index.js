@@ -24,7 +24,7 @@ app.post('/twilio/inbound', (req, res) => {
 
     const called_number = req.query.phoneNumber;
     dial.number({
-        statusCallback: "https://webhook.site/0b382ccc-253a-456c-96cf-ab8291a514f8?event=customer",
+        statusCallback: "https://webhook.site/0b650013-7b08-4616-aa4a-40fe8b046933?event=customer",
         statusCallbackEvent: ["answered", "completed", "initiated", "ringing"],
         statusCallbackMethod: "POST"
     }, called_number);
