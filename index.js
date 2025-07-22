@@ -20,6 +20,10 @@ app.post('/twilio/inbound', (req, res) => {
 
     const dial = twiml.dial({
         callerId: callerId,
+        record: "record-from-answer-dual",
+        recordingStatusCallback: recordingStatusCallBack,
+        recordingStatusCallbackMethod: "POST",
+        recordingStatusCallbackEvent: [TwilioRecordEventTypes.COMPLETED],
     });
 
     const called_number = req.query.phoneNumber;
@@ -31,7 +35,8 @@ app.post('/twilio/inbound', (req, res) => {
 
     // send response to Twilio
     res.type('text/xml');
-    res.send(twiml.toString());
+    const abc = res.send(twiml.toString());
+    console.log(abc)
 });
 const twilioPhoneNumber = '+13167106323';
 const customerNumber = '+917008284181';
