@@ -23,7 +23,7 @@ app.post('/twilio/inbound', (req, res) => {
         record: "record-from-answer-dual",
         recordingStatusCallback: "https://webhook.site/514d1167-dc77-43cf-8ad1-f75c86271573",
         recordingStatusCallbackMethod: "POST",
-        recordingStatusCallbackEvent: [TwilioRecordEventTypes.COMPLETED],
+        recordingStatusCallbackEvent: ["completed"],
     });
 
     const called_number = req.query.phoneNumber;
