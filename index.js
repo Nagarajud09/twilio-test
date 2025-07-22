@@ -21,14 +21,14 @@ app.post('/twilio/inbound', (req, res) => {
     const dial = twiml.dial({
         callerId: callerId,
         record: "record-from-answer-dual",
-        recordingStatusCallback: recordingStatusCallBack,
+        recordingStatusCallback: "https://webhook.site/514d1167-dc77-43cf-8ad1-f75c86271573",
         recordingStatusCallbackMethod: "POST",
         recordingStatusCallbackEvent: [TwilioRecordEventTypes.COMPLETED],
     });
 
     const called_number = req.query.phoneNumber;
     dial.number({
-        statusCallback: "https://webhook.site/0b650013-7b08-4616-aa4a-40fe8b046933?event=customer",
+        statusCallback: "https://webhook.site/514d1167-dc77-43cf-8ad1-f75c86271573?event=customer",
         statusCallbackEvent: ["answered", "completed", "initiated", "ringing"],
         statusCallbackMethod: "POST"
     }, called_number);
